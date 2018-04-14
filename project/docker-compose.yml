@@ -1,0 +1,11 @@
+version: "3"
+# Author: Haoji Liu
+services:
+  app:
+    volumes:
+      - ./src:/srv/src
+    build: .
+    container_name: cmpe273_app
+    ports:
+      - "5000:5000" # for local to make grpc call to container
+    tty: true
