@@ -8,4 +8,10 @@
 
 
 ## Haoji's version on how it can work in terms of baby food transaction:
-* every time 
+* wtf???
+
+
+## Dev guide
+* `docker-compose build app`
+* `docker-compose up -d app`
+* go to 'localhost:5000/mine' to mine a new block
