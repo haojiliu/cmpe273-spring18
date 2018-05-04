@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Haoji Liu
 
 import hashlib
@@ -6,6 +7,16 @@ from time import time
 
 from decimal import *
 context = getcontext()
+
+from datetime import datetime
+import json
+import os, logging, sys
+
+# Third party module
+import requests
+from flask import Flask, render_template, request, redirect, url_for
+
+import logic as l
 
 
 class Blockchain:
@@ -104,6 +115,7 @@ class Blockchain:
     :param previous_hash: Hash of previous Block
     :return: New Block
     """
+    assert len(self.current_transactions) == 1
 
     block = {
       'index': len(self.chain) + 1,
@@ -119,7 +131,7 @@ class Blockchain:
     self.chain.append(block)
     return block
 
-  def new_transaction(self, sender, recipient, amount):
+  def new_transaction(self, form_dict):
     """
     Creates a new transaction to go into the next mined Block
 
@@ -129,9 +141,13 @@ class Blockchain:
     :return: The index of the Block that will hold this transaction
     """
     self.current_transactions.append({
-      'sender': sender,
-      'recipient': recipient,
-      'amount': amount,
+      'id': self.txn_hash,
+      'status': self.status,
+      'created_at_utc': self.status,
+      'from_legal_entity': self.from_wallet,
+      'to_legal_entity': self.to_wallet,
+      'product_sku': self.to_wallet,
+      'quantity': self.amount,
     })
 
     return self.last_block['index'] + 1

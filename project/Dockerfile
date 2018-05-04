@@ -14,4 +14,6 @@ RUN pip3 install -r /srv/config/requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "/srv/src/main.py", "--port", "5000"]
+# Copy config files over
+ADD ./config/supervisord.conf /etc/supervisord.conf
+CMD /usr/bin/supervisord -c /etc/supervisord.conf

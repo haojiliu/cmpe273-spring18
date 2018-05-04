@@ -7,5 +7,7 @@ services:
     build: .
     container_name: cmpe273_app
     ports:
-      - "5000:5000" # for local to make grpc call to container
+      - "5000:5000" # for blockchain
+      - "5001:5001" # for registry
+      - "9002:9002" # for supervisord
     tty: true
