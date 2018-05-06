@@ -115,7 +115,7 @@ class Blockchain:
     :param previous_hash: Hash of previous Block
     :return: New Block
     """
-    assert len(self.current_transactions) == 1
+    #assert len(self.current_transactions) == 1
 
     block = {
       'index': len(self.chain) + 1,

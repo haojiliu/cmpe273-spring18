@@ -1,31 +1,39 @@
 CREATE TABLE IF NOT EXISTS legal_entity(
   id text PRIMARY KEY NOT NULL,
-  balance numeric,
-  coin_symbol text);
+  name text,
+  desc text,
+  email text,
+  address text,
+  flags numeric,
+  created_at_utc text,
+  updated_at_utc text);
 
 CREATE TABLE IF NOT EXISTS txn(
-  txn_hash text PRIMARY KEY NOT NULL,
-  timestamp text NOT NULL,
-  from_wallet text NOT NULL,
-  to_wallet text NOT NULL,
-  amount numeric NOT NULL,
-  status text,
-  FOREIGN KEY(from_wallet) REFERENCES wallet (id),
-  FOREIGN KEY(to_wallet) REFERENCES wallet (id));
+  id text PRIMARY KEY NOT NULL,
+  created_at_utc text NOT NULL,
+  from_legal_entity numeric NOT NULL,
+  to_legal_entity numeric NOT NULL,
+  product_sku text NOT NULL,
+  quantity numeric NOT NULL);
+  
 
 CREATE TABLE IF NOT EXISTS product(
   sku text PRIMARY KEY NOT NULL,
+  flags numeric,
+  description text,
+  weight text,
+  size_x numeric,
+  size_y numeric,
+  size_z numeric,
   manufacturer_id text NOT NULL,
   created_at_utc text NOT NULL,
-  updated_at_utc text NOT NULL,
-  flags numeric NOT NULL,
-  FOREIGN KEY(manufacturer_id) REFERENCES entity (id),
+  updated_at_utc text NOT NULL);
 
 
-CREATE TABLE IF NOT EXISTS block(
-   id text PRIMARY KEY NOT NULL,
-   timestamp text NOT NULL,
-   transaction_id text NOT NULL,
-   proof text NOT NULL,
-   previous_hash numeric NOT NULL,
-   FOREIGN KEY(transaction_id) REFERENCES txn (id),
+-- CREATE TABLE IF NOT EXISTS block(
+--    id text PRIMARY KEY NOT NULL,
+--    timestamp text NOT NULL,
+--    transaction_id text NOT NULL,
+--    proof text NOT NULL,
+--    previous_hash numeric NOT NULL,
+--    FOREIGN KEY(transaction_id) REFERENCES txn (id),

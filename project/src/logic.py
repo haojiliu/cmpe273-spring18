@@ -1,6 +1,6 @@
 from datetime import date
 
-from model import Wallet, Transaction
+from model import LegalEntity, Transaction, Product
 
 from session_factory import create_session
 
