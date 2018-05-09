@@ -1,5 +1,6 @@
 import requests
-
+import json
+import time
 def pp(res):
   #print('getting status code:')
   print(res.status_code)
@@ -7,55 +8,56 @@ def pp(res):
   print(res.text)
 
 host = 'http://127.0.0.1:5000'
+host1 = 'http://127.0.0.1:5001'
 
-print('hello world')
-res = requests.get(host)
+print('\nA empty blockchain when it just started:')
+res = requests.get(host + '/chain')
 pp(res)
 
-print('create a wallet')
+# print('\nregistry server connection:')
+# res = requests.get(host1)
+# pp(res)
 
-# create a wallet
-post_data = {
-      "id" : "1233445665353",
-      "balance": 5,
-      "coin_symbol": "FOO_COIN"
-  }
-res = requests.post(host+'/wallets', data=post_data)
-pp(res)
-print('get a wallet')
+# # print('register nodes:')
+# # res = requests.post(host + '/nodes/register', data = json.dumps({"nodes": [host, host1]}))
+# # pp(res)
 
-# get the created wallet
-res = requests.get(host + '/wallets/1233445665353')
+print('\ncreate a new entity:')
+res = requests.post(host1 + '/entity', data={'id': 1})
 pp(res)
 
-print('delete a wallet')
-
-# delete the created wallet
-res = requests.delete(host + '/wallets/1233445665353')
+print('\ncreate a another entity:')
+res = requests.post(host1 + '/entity', data={'id': 2})
 pp(res)
 
-print('get a wallet')
+# print('\nentity info:')
+# res = requests.get(host1 + '/entity/1')
+# pp(res)
 
-# get the created wallet
-res = requests.get(host + '/wallets/1233445665353')
-pp(res)
+# print('\ndelete entity:')
+# res = requests.delete(host1 + '/entity/1')
+# pp(res)
 
-print('create a txn')
+# print('\nentity info:')
+# res = requests.get(host1 + '/entity/1')
+# pp(res)
 
-# create a txn
-post_data = {
-      "txn_hash" : "12314",
-      "amount": 5,
-      "from_wallet": '12345',
-      "to_wallet": '123456',
-      'time_stamp': '2016-12-30 12:00:00'
-  }
-res = requests.post(host+'/txns', data=post_data)
+# print('\ncreate a product:')
+# res = requests.post(host1 + '/product', data={'sku': '123-456-789'})
+# pp(res)
+
+# print('\nproduct info:')
+# res = requests.get(host1 + '/product/123-456-789')
+# pp(res)
+
+# print('\ndelete entity:')
+# res = requests.delete(host1 + '/product/123-456-789')
+# pp(res)
+
+# print('\nentity info:')
+# res = requests.get(host1 + '/product/123-456-789')
+# pp(res)
+
+print('\ncreate a txn:')
+res = requests.post(host + '/txns', data={'id': 1, 'created_at_utc': time.time(), 'from_legal_entity':'1', 'to_legal_entity':'2', 'product_sku':'123'})
 pp(res)
-print('get a txn')
-# get the created txn
-res = requests.get(host + '/txns/1234')
-pp(res)
-#
-# print('delete a txn')
-# print('get a txn')
