@@ -9,9 +9,8 @@ from decimal import *
 context = getcontext()
 
 from datetime import datetime
-import json
 import os, logging, sys
-
+from urllib.parse import urlparse
 # Third party module
 import requests
 from flask import Flask, render_template, request, redirect, url_for
@@ -115,7 +114,7 @@ class Blockchain:
     :param previous_hash: Hash of previous Block
     :return: New Block
     """
-    assert len(self.current_transactions) == 1
+    #assert len(self.current_transactions) == 1
 
     block = {
       'index': len(self.chain) + 1,
@@ -131,7 +130,7 @@ class Blockchain:
     self.chain.append(block)
     return block
 
-  def new_transaction(self, form_dict):
+  def new_transaction(self, form):
     """
     Creates a new transaction to go into the next mined Block
 
@@ -140,15 +139,16 @@ class Blockchain:
     :param amount: decimal
     :return: The index of the Block that will hold this transaction
     """
-    self.current_transactions.append({
-      'id': self.txn_hash,
-      'status': self.status,
-      'created_at_utc': self.status,
-      'from_legal_entity': self.from_wallet,
-      'to_legal_entity': self.to_wallet,
-      'product_sku': self.to_wallet,
-      'quantity': self.amount,
-    })
+    # self.current_transactions.append({
+    #   'id' = form.get('id')
+    #   'flags' = form.get('flags', 1)
+    #   'created_at_utc' = form.get('created_at_utc')
+    #   'from_legal_entity' = form.get('from_legal_entity', 2)
+    #   'to_legal_entity' = form.get('to_legal_entity', 1)
+    #   'product_sku = form.get('product_sku', '123-234-435')
+    #   quantity = form.get('quantity', 2)
+    # })
+    self.current_transactions.append(form.to_dict())
 
     return self.last_block['index'] + 1
 

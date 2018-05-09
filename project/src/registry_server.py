@@ -53,7 +53,7 @@ def product_delete(sku):
 # Homepage
 @app.route('/')
 def index():
-  return 'Hello World'
+  return 'registry server'
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5001, debug=True)
