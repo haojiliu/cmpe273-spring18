@@ -22,7 +22,7 @@ def create_product(form):
   try:
     with create_session() as s:
       w = Product(form)
-      if _get_products([w.id], s):
+      if _get_products([w.sku], s):
         return 'existed'
       else:
         s.add(w)
@@ -34,7 +34,7 @@ def create_product(form):
 
 def _get_products(skus, session):
   """Return a list of Product object"""
-  res = session.query(Product).filter(Wallet.id.in_(skus)).all()
+  res = session.query(Product).filter(Product.sku.in_(skus)).all()
   return res
 
 def get_products(skus):
@@ -54,7 +54,9 @@ def delete_products(skus):
 
 def _get_legal_entities(ids, session):
   """Return a list of Entity object"""
+  
   res = session.query(LegalEntity).filter(LegalEntity.id.in_(ids)).all()
+  
   return res
 
 def get_legal_entities(ids):
@@ -74,7 +76,7 @@ def delete_legal_entities(ids):
 
 def _get_txns(ids, session):
   """Return a list of Transaction object"""
-  res = session.query(Transaction).filter(Transaction.txn_hash.in_(ids)).all()
+  res = session.query(Transaction).filter(Transaction.id.in_(ids)).all()
   return res
 
 def get_txns(ids):
@@ -88,11 +90,11 @@ def create_transaction(form):
       t = Transaction(form)
 
       # TODO: not sure why foreign key constraint doesn't work
-      entities = _get_txns([t.from_legal_entity, t.to_legal_entity], s)
+      entities = _get_legal_entities([t.from_legal_entity, t.to_legal_entity], s)
       if len(entities) != 2:
         return 'invalid entity ids'
 
-      if _get_txns([t.txn_hash], s):
+      if _get_txns([t.id], s):
         return 'existed'
       else:
         s.add(t)

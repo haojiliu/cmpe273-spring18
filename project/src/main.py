@@ -1,10 +1,10 @@
 # Haoji Liu
 from urllib.parse import urlparse
 from uuid import uuid4
-
+import json
 import requests
 from flask import Flask, jsonify, request
-
+import logic as l
 CONST_NEW_COIN_BONUS_SENDER = '0'
 
 
@@ -67,8 +67,7 @@ def txn_verify(txn_id):
 
 @app.route('/txns', methods=['POST'])
 def txn_create():
-  form_dict = request.get_json()
-
+  form_dict = request.form
   # Check that the required fields are in the POST'ed data
   required = ['from_legal_entity', 'to_legal_entity', 'product_sku']
   if not all(k in form_dict for k in required):
@@ -87,7 +86,7 @@ def txn_create():
     block = blockchain.new_block(proof, last_hash)
 
     # # lastly, add to the database
-    # res = l.create_transaction(post_data)
+    res = l.create_transaction(form_dict)
   else:
     # TODO: not mine a new block, add to the existing list of txns
     pass
@@ -108,8 +107,8 @@ def register_nodes():
   """I assume this endpoint will be hit periodically
   to reflect the latest reality
   """
-  values = request.get_json()
-
+  values = json.loads(request.data)
+  print(values)
   nodes = values.get('nodes')
   if nodes is None:
     return "Error: Please supply a valid list of nodes", 400

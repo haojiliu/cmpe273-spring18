@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS legal_entity(
 CREATE TABLE IF NOT EXISTS txn(
   id text PRIMARY KEY NOT NULL,
   created_at_utc text NOT NULL,
-  from_legal_entity numeric NOT NULL,
-  to_legal_entity numeric NOT NULL,
+  from_legal_entity text NOT NULL,
+  to_legal_entity text NOT NULL,
   product_sku text NOT NULL,
   quantity numeric NOT NULL);
   
