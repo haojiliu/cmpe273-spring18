@@ -1,3 +1,7 @@
+DELETE FROM legal_entity;
+DELETE FROM txn;
+DELETE FROM product;
+
 CREATE TABLE IF NOT EXISTS legal_entity(
   id text PRIMARY KEY NOT NULL,
   name text,
@@ -15,7 +19,7 @@ CREATE TABLE IF NOT EXISTS txn(
   to_legal_entity text NOT NULL,
   product_sku text NOT NULL,
   quantity numeric NOT NULL);
-  
+
 
 CREATE TABLE IF NOT EXISTS product(
   sku text PRIMARY KEY NOT NULL,

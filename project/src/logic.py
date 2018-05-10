@@ -12,25 +12,24 @@ def create_legal_entity(form):
         return 'existed'
       else:
         s.add(w)
+        return w.id
   except:
     raise
     return 'failed'
-
-  return 'created'
 
 def create_product(form):
   try:
     with create_session() as s:
-      w = Product(form)
-      if _get_products([w.sku], s):
+      p = Product(form)
+      if _get_products([p.sku], s):
         return 'existed'
       else:
-        s.add(w)
+        s.add(p)
+        return p.sku
   except:
     raise
     return 'failed'
 
-  return 'created'
 
 def _get_products(skus, session):
   """Return a list of Product object"""
@@ -54,9 +53,8 @@ def delete_products(skus):
 
 def _get_legal_entities(ids, session):
   """Return a list of Entity object"""
-  
   res = session.query(LegalEntity).filter(LegalEntity.id.in_(ids)).all()
-  
+
   return res
 
 def get_legal_entities(ids):
@@ -89,17 +87,18 @@ def create_transaction(form):
     with create_session() as s:
       t = Transaction(form)
 
-      # TODO: not sure why foreign key constraint doesn't work
       entities = _get_legal_entities([t.from_legal_entity, t.to_legal_entity], s)
       if len(entities) != 2:
         return 'invalid entity ids'
+      products = _get_products([t.product_sku], s)
+      if len(products) != 1:
+        return 'invalid product sku'
 
       if _get_txns([t.id], s):
         return 'existed'
       else:
         s.add(t)
+        return t.id
   except:
     raise
     return 'failed'
-
-  return 'created'

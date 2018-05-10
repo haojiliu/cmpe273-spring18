@@ -33,8 +33,10 @@ class Blockchain:
 
     :param address: Address of node. Eg. 'http://192.168.0.5:5000'
     """
-
+    print('address is  ------ ' + address)
     parsed_url = urlparse(address)
+    print('address is  ------ ' + parsed_url.netloc)
+    print('address is  ------ ' + parsed_url.path)
     if parsed_url.netloc:
       self.nodes.add(parsed_url.netloc)
     elif parsed_url.path:
@@ -139,16 +141,7 @@ class Blockchain:
     :param amount: decimal
     :return: The index of the Block that will hold this transaction
     """
-    # self.current_transactions.append({
-    #   'id' = form.get('id')
-    #   'flags' = form.get('flags', 1)
-    #   'created_at_utc' = form.get('created_at_utc')
-    #   'from_legal_entity' = form.get('from_legal_entity', 2)
-    #   'to_legal_entity' = form.get('to_legal_entity', 1)
-    #   'product_sku = form.get('product_sku', '123-234-435')
-    #   quantity = form.get('quantity', 2)
-    # })
-    self.current_transactions.append(form.to_dict())
+    self.current_transactions.append(form)
 
     return self.last_block['index'] + 1
 

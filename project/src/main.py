@@ -1,23 +1,23 @@
 # Haoji Liu
-from urllib.parse import urlparse
-from uuid import uuid4
+import sys
+import uuid
 import json
 import requests
+from urllib.parse import urlparse
+
 from flask import Flask, jsonify, request
 import logic as l
-CONST_NEW_COIN_BONUS_SENDER = '0'
-
 
 import blockchain as bc
-
 from decimal import *
-context = getcontext()
+
+CONST_NEW_COIN_BONUS_SENDER = '0'
 
 # Instantiate the Node
 app = Flask(__name__)
 
 # Generate a globally unique address for this node
-nid = str(uuid4()).replace('-', '')
+nid = str(uuid.uuid4()).replace('-', '')
 
 # Instantiate the Blockchain
 blockchain = bc.Blockchain()
@@ -63,13 +63,15 @@ CONST_ALWAYS_CREATE_BLOCK = True
 
 @app.route('/txns/verify/<txn_id>', methods=['GET'])
 def txn_verify(txn_id):
-  pass
+  """Returns True if this transaction is valid"""
+  return True
 
 @app.route('/txns', methods=['POST'])
 def txn_create():
-  form_dict = request.form
+  form_dict = request.form.to_dict()
+  form_dict['id'] = str(uuid.uuid4())
   # Check that the required fields are in the POST'ed data
-  required = ['from_legal_entity', 'to_legal_entity', 'product_sku']
+  required = ['from_legal_entity', 'to_legal_entity', 'product_sku', 'quantity']
   if not all(k in form_dict for k in required):
     return 'Missing values', 400
 
@@ -107,9 +109,11 @@ def register_nodes():
   """I assume this endpoint will be hit periodically
   to reflect the latest reality
   """
-  values = json.loads(request.data)
+  values = request.form.to_dict()
   print(values)
   nodes = values.get('nodes')
+  print(nodes)
+
   if nodes is None:
     return "Error: Please supply a valid list of nodes", 400
 
@@ -121,7 +125,6 @@ def register_nodes():
     'total_nodes': list(blockchain.nodes),
   }
   return jsonify(response), 201
-
 
 @app.route('/nodes/resolve', methods=['GET'])
 def consensus():
@@ -143,6 +146,9 @@ def consensus():
 
   return jsonify(response), 200
 
-
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000, debug=True)
+  if len(sys.argv) == 2:
+    p = sys.argv[1]
+  else:
+    p = 5000
+  app.run(host='0.0.0.0', port=int(p), debug=True)
