@@ -71,11 +71,14 @@ pp(res)
 print('\nNode 2 looks like:')
 res = requests.get(host1 + '/chain')
 pp(res)
-#
-# print('\nregistry node 1:')
-# res = requests.get(registry_host)
-# pp(res)
-#
-# print('register nodes:')
-# res = requests.post(host + '/nodes/register', data = json.dumps({"nodes": [host, registry_host]}))
-# pp(res)
+
+print('\nresolve consensus on node 1:')
+res = requests.get(host + '/nodes/resolve')
+pp(res)
+
+print('\nNode 1 looks like:')
+res = requests.get(host + '/chain')
+pp(res)
+print('\nNode 2 looks like:')
+res = requests.get(host1 + '/chain')
+pp(res)

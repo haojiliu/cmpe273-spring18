@@ -32,12 +32,3 @@ CREATE TABLE IF NOT EXISTS product(
   manufacturer_id text NOT NULL,
   created_at_utc text NOT NULL,
   updated_at_utc text NOT NULL);
-
-
--- CREATE TABLE IF NOT EXISTS block(
---    id text PRIMARY KEY NOT NULL,
---    timestamp text NOT NULL,
---    transaction_id text NOT NULL,
---    proof text NOT NULL,
---    previous_hash numeric NOT NULL,
---    FOREIGN KEY(transaction_id) REFERENCES txn (id),
