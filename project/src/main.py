@@ -109,10 +109,8 @@ def register_nodes():
   """I assume this endpoint will be hit periodically
   to reflect the latest reality
   """
-  values = request.form.to_dict()
-  print(values)
+  values = request.json
   nodes = values.get('nodes')
-  print(nodes)
 
   if nodes is None:
     return "Error: Please supply a valid list of nodes", 400

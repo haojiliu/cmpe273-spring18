@@ -33,10 +33,7 @@ class Blockchain:
 
     :param address: Address of node. Eg. 'http://192.168.0.5:5000'
     """
-    print('address is  ------ ' + address)
     parsed_url = urlparse(address)
-    print('address is  ------ ' + parsed_url.netloc)
-    print('address is  ------ ' + parsed_url.path)
     if parsed_url.netloc:
       self.nodes.add(parsed_url.netloc)
     elif parsed_url.path:
@@ -58,15 +55,12 @@ class Blockchain:
 
     while current_index < len(chain):
       block = chain[current_index]
-      print(f'{last_block}')
-      print(f'{block}')
-      print("\n-----------\n")
       # Check that the hash of the block is correct
       if block['previous_hash'] != self.hash(last_block):
         return False
 
       # Check that the Proof of Work is correct
-      if not self.valid_proof(last_block['proof'], block['proof'], last_block['previous_hash']):
+      if not self.valid_proof(last_block['proof'], block['proof'], block['previous_hash']):
         return False
 
       last_block = block
@@ -90,7 +84,12 @@ class Blockchain:
 
     # Grab and verify the chains from all the nodes in our network
     for node in neighbors:
-      response = requests.get(f'http://{node}/chain')
+      url = 'http://%s/chain' % node
+      try:
+        response = requests.get(url, timeout=1)
+      except:
+        print('contact node %s failed, continue...' % url)
+        continue
 
       if response.status_code == 200:
         length = response.json()['length']

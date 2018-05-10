@@ -9,26 +9,26 @@ def create_legal_entity(form):
     with create_session() as s:
       w = LegalEntity(form)
       if _get_legal_entities([w.id], s):
-        return 'existed'
+        return 'Existed'
       else:
         s.add(w)
         return w.id
   except:
     raise
-    return 'failed'
+    return 'Failed'
 
 def create_product(form):
   try:
     with create_session() as s:
       p = Product(form)
       if _get_products([p.sku], s):
-        return 'existed'
+        return 'Existed'
       else:
         s.add(p)
         return p.sku
   except:
     raise
-    return 'failed'
+    return 'Failed'
 
 
 def _get_products(skus, session):
@@ -48,8 +48,8 @@ def delete_products(skus):
         s.delete(p)
   except:
     raise
-    return 'delete failed'
-  return 'deleted'
+    return 'Delete failed'
+  return 'Deleted'
 
 def _get_legal_entities(ids, session):
   """Return a list of Entity object"""
@@ -69,8 +69,8 @@ def delete_legal_entities(ids):
         s.delete(p)
   except:
     raise
-    return 'delete failed'
-  return 'deleted'
+    return 'Delete failed'
+  return 'Deleted'
 
 def _get_txns(ids, session):
   """Return a list of Transaction object"""
@@ -89,16 +89,16 @@ def create_transaction(form):
 
       entities = _get_legal_entities([t.from_legal_entity, t.to_legal_entity], s)
       if len(entities) != 2:
-        return 'invalid entity ids'
+        return 'Invalid entity ids'
       products = _get_products([t.product_sku], s)
       if len(products) != 1:
-        return 'invalid product sku'
+        return 'Invalid product sku'
 
       if _get_txns([t.id], s):
-        return 'existed'
+        return 'Existed'
       else:
         s.add(t)
         return t.id
   except:
     raise
-    return 'failed'
+    return 'Failed'
