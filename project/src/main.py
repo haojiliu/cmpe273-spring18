@@ -64,7 +64,17 @@ CONST_ALWAYS_CREATE_BLOCK = True
 @app.route('/txns/verify/<txn_id>', methods=['GET'])
 def txn_verify(txn_id):
   """Returns True if this transaction is valid"""
-  return True
+  if len(l.get_txns(txn_id)) != 1:
+    res = False
+  
+  b = blockchain.get_block_of_txn(txn_id)
+  if b != None: 
+    proof = blockchain.mTree.get_proof(b['index']-1)
+    root = blockchain.mTree.get_merkle_root()
+    if blockchain.mTree.validate_proof(proof, root, blockchain.hash(b)):
+      res = True
+  res = False
+  return str(res)
 
 @app.route('/txns', methods=['POST'])
 def txn_create():
