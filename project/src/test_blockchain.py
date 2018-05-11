@@ -53,6 +53,7 @@ post_data = {
 
 res = requests.post(host + '/txns', data=post_data)
 pp(res)
+txn_id = res.text
 
 print('\nNode 1 looks like:')
 res = requests.get(host + '/chain')
@@ -81,4 +82,8 @@ res = requests.get(host + '/chain')
 pp(res)
 print('\nNode 2 looks like:')
 res = requests.get(host1 + '/chain')
+pp(res)
+
+print('\nVerify if txn is valid:')
+res = requests.get(host + '/txns/verify/' + txn_id)
 pp(res)

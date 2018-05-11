@@ -4,7 +4,7 @@
 import hashlib
 import simplejson as json
 from time import time
-
+from merkleTree import MerkleTree
 from decimal import *
 context = getcontext()
 
@@ -23,7 +23,7 @@ class Blockchain:
     self.current_transactions = []
     self.chain = []
     self.nodes = set()
-
+    self.mTree = MerkleTree()
     # Create the genesis block
     self.new_block(proof=100, previous_hash='1')
 
@@ -129,7 +129,17 @@ class Blockchain:
     self.current_transactions = []
 
     self.chain.append(block)
+    block_string = json.dumps(block, sort_keys=True, use_decimal=True)
+    self.mTree.add_leaf(block_string, do_hash=True)
+    self.mTree.make_tree()
     return block
+
+  def get_block_of_txn(self, txn_id):
+    for b in self.chain:
+      if b['transactions'] and b['transactions'][0]['id'] == txn_id:
+        return b
+
+    return None
 
   def new_transaction(self, form):
     """
