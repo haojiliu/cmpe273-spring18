@@ -1,6 +1,6 @@
-DELETE FROM legal_entity;
-DELETE FROM txn;
-DELETE FROM product;
+-- DELETE FROM legal_entity;
+-- DELETE FROM txn;
+-- DELETE FROM product;
 
 CREATE TABLE IF NOT EXISTS legal_entity(
   id text PRIMARY KEY NOT NULL,

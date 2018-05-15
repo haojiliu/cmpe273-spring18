@@ -200,6 +200,7 @@ class Blockchain:
 
     """
 
-    guess = f'{last_proof}{proof}{last_hash}'.encode()
+    guess = '%s%s%s' % (last_proof, proof, last_hash)
+    guess = guess.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     return guess_hash[:4] == "0000"

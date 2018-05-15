@@ -8,6 +8,6 @@ services:
     container_name: cmpe273_app
     ports:
       - "5000:5000" # for blockchain
-      - "5001:3000" # for registry
+      - "3000:3000" # for registry
       - "9002:9002" # for supervisord
     tty: true

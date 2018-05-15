@@ -26,7 +26,7 @@ CONST_SKU_PREFIX_DEFAULT = 'ABC'
 #     self.previous_hash = previous_hash
 
 def generate_randome_string(size):
-  return ''.join(random.choices(string.ascii_uppercase + string.digits, k=size))
+  return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(size))
 
 def sku_generator(prefix=None):
   generated_parts = [generate_randome_string(3), generate_randome_string(3)]
