@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>273 Project Demo</title>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="" method="post">
+          <h2>Entity Section </h2>
+          <div class="input text">
+            <input type="text" id="id1" name="id1" placeholder="Enter id" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Register Entity" ></br>
+            <input type="submit" name="submit" value="Get Entity Info" ></br>
+            <input type="submit" name="submit" value="Delete Entity" ></br>
+          </div>
+
+          <h2>Product Section </h2>
+          <div class="input text">
+            <input type="text" id="id2" name="id2" placeholder="Enter id" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Create Product" ></br>
+            <input type="submit" name="submit" value="Product Info" ></br>
+            <input type="submit" name="submit" value="Delete Product" ></br>
+          </div>
+
+          <h2>Transaction Section </h2>
+          <div class="input text">
+            <input type="text" id="sku" name="sku" placeholder="Enter Product SKU" ></br>
+            <input type="text" id="from" name="from" placeholder="From Entity" ></br>
+            <input type="text" id="to" name="to" placeholder="To Entity" ></br>
+            <input type="text" id="quantity" name="quantity" placeholder="Quantity" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Create Transaction" ></br>
+          </div>
+
+          <h2>Show Blockchain </h2>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Show Blockchain" ></br>
+          </div>
+
+        </form>
+    </body>
+</html>

@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+
 def pp(res):
   print(res.status_code)
   print(res.text)
@@ -61,18 +62,19 @@ print('\nNode 2 looks like:')
 res = requests.get(host1 + '/chain')
 pp(res)
 
-print('\nresolve consensus on node 2:')
+print('\nResolve consensus on node 2:')
 res = requests.get(host1 + '/nodes/resolve')
 pp(res)
 
 print('\nNode 1 looks like:')
 res = requests.get(host + '/chain')
 pp(res)
+
 print('\nNode 2 looks like:')
 res = requests.get(host1 + '/chain')
 pp(res)
 
-print('\nresolve consensus on node 1:')
+print('\nResolve consensus on node 1:')
 res = requests.get(host + '/nodes/resolve')
 pp(res)
 

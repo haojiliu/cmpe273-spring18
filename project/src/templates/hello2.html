@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>273 Project Demo</title>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="" method="post">
+          <h2>Nodes Register Section </h2>
+          <div class="input text">
+            <input type="text" id="node1" name="node1" placeholder="Enter node to add" ></br></br>
+            <input type="text" id="node2" name="node2" placeholder="Enter node to add" ></br></br>
+            <input type="text" id="node2re" name="node2re" placeholder="Enter node to register" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Register Nodes" ></br>
+          </div>
+
+          <h2>Nodes Info Section </h2>
+          <div class="input text">
+            <input type="text" id="node3" name="node3" placeholder="Enter node to get info" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Get Node Info" ></br>
+          </div>
+
+          <h2>Entity Section </h2>
+          <div class="input text">
+            <input type="text" id="id1" name="id1" placeholder="Enter id" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Register Entity" ></br>
+            <input type="submit" name="submit" value="Get Entity Info" ></br>
+            <input type="submit" name="submit" value="Delete Entity" ></br>
+          </div>
+
+          <h2>Product Section </h2>
+          <div class="input text">
+            <input type="text" id="id2" name="id2" placeholder="Enter id" ></br></br>
+          </div>
+          <div class="input submit">
+            <input size="60" type="submit" name="submit" value="Create Product" ></br>
+            <input size="60" type="submit" name="submit" value="Product Info" ></br>
+            <input size="60" type="submit" name="submit" value="Delete Product" ></br>
+          </div>
+
+          <h2>Transaction Section </h2>
+          <div class="input text">
+            <input size="60" type="text" id="node2write" name="note2w" placeholder="Enter The Node to Write Transaction" ></br>
+            <input size="60" type="text" id="sku" name="sku" placeholder="Enter Product SKU" ></br>
+            <input size="60" type="text" id="from" name="from" placeholder="From Entity" ></br>
+            <input size="60" type="text" id="to" name="to" placeholder="To Entity" ></br>
+            <input size="60" type="text" id="quantity" name="quantity" placeholder="Quantity" ></br></br>
+          </div>
+          <div class="input submit">
+            <input type="submit" name="submit" value="Create Transaction" ></br>
+          </div>
+
+
+        </form>
+
+    </body>
+</html>
