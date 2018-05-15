@@ -10,4 +10,5 @@ services:
       - "5000:5000" # for blockchain
       - "3000:3000" # for registry
       - "9002:9002" # for supervisord
+      - "4000:4000" # for UI
     tty: true

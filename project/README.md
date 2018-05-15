@@ -5,6 +5,7 @@
 * `docker-compose up -d app`
 * run test.py on local, it will hit the endpoint inside the docker container
 * go to `localhost:9002` to stop/start/restart processes with code changes
+* go to `localhost:4000` to use the GUI
 
 ## Design
 
